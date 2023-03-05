@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3474867D29A38DFD0042514F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474867C29A38DFD0042514F /* User.swift */; };
 		3474867F29A38EF20042514F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474867E29A38EF20042514F /* DataManager.swift */; };
 		3474868129A3918E0042514F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474868029A3918E0042514F /* ListView.swift */; };
 		3474868429A3954B0042514F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3474868329A3954B0042514F /* FirebaseFirestoreSwift */; };
@@ -44,7 +43,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3474867C29A38DFD0042514F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3474867E29A38EF20042514F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		3474868029A3918E0042514F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		34BF9BB2296704D90097CD46 /* BeFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,7 +124,6 @@
 				34BF9BEB296743170097CD46 /* GoogleService-Info.plist */,
 				34BF9BB5296704D90097CD46 /* BeFitApp.swift */,
 				34BF9BB7296704D90097CD46 /* ContentView.swift */,
-				3474867C29A38DFD0042514F /* User.swift */,
 				34BF9BB9296704DA0097CD46 /* Assets.xcassets */,
 				34BF9BBB296704DA0097CD46 /* BeFit.entitlements */,
 				3474867E29A38EF20042514F /* DataManager.swift */,
@@ -301,7 +298,6 @@
 				34BF9BB6296704D90097CD46 /* BeFitApp.swift in Sources */,
 				34D271A829B48B07008F4B62 /* var.swift in Sources */,
 				34D271A629B4815F008F4B62 /* ViewC.swift in Sources */,
-				3474867D29A38DFD0042514F /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeFit/Preview Content\"";
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -494,7 +490,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeFit/Preview Content\"";
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -530,7 +526,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
@@ -553,7 +549,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
@@ -575,7 +571,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
@@ -597,7 +593,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X5VP7PPQBG;
+				DEVELOPMENT_TEAM = PXRQXW2P3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;

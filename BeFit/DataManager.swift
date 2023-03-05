@@ -10,7 +10,7 @@ import Firebase
 import FirebaseCore
 
 
-class BMI {
+struct BMI {
     static let shared = DataManager() // Singleton instance
     
     // Calculate the BMI based on the weight and height
