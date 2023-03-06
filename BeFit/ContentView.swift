@@ -9,6 +9,37 @@ import SwiftUI
 import Firebase
 import Combine
 
+/*TabView {
+            NavigationView {
+                VStack {
+                    Text("Home View")
+                    NavigationLink(destination: DetailView()) {
+                        Text("Navigate to Detail View 1")
+                    }
+                }
+                .navigationBarTitle("Home")
+            }
+            .tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
+            }
+
+            NavigationView {
+                VStack {
+                    Text("Settings View")
+                    NavigationLink(destination: ViewB()) {
+                        Text("Navigate to Detail View 2")
+                    }
+                }
+                .navigationBarTitle("Settings")
+            }
+            .tabItem {
+                Image(systemName: "gear")
+                Text("Settings")
+            }
+        }*/
+
+
 
 struct ContentView: View {
     
@@ -16,6 +47,7 @@ struct ContentView: View {
     @Binding var password : String
     
     let dataManager = DataManager()
+
     
     var body: some View {
         VStack {
@@ -312,22 +344,20 @@ struct Home : View {
     
     // MARK: Get BMI
     struct getBMI : View {
-        
+            
         @State var color = Color.black.opacity(0.7)
         @State var height: String = ""
         @State var weight: String = ""
         @State var value = ""
         @State public var userBMI: Double?
+        @State var linkIsActive = false // New state variable
         
         let allowedChars = CharacterSet.decimalDigits
         
         
         var body: some View {
             GeometryReader {_ in
-                
                 VStack{
-                    Image("logo")
-                    
                     Text("Enter Your Height")
                         .font(.title)
                         .fontWeight(.bold)
@@ -339,12 +369,7 @@ struct Home : View {
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 4).stroke(self.height != "" ? Color("Color") : self.color, lineWidth: 2))
                         .padding(.top, 25)
-//                        .onReceive(Just(height)) { newValue in
-//                            let filtered = newValue.filter { allowedChars.contains(Unicode.Scalar(String($0))!) }
-//                            if filtered != newValue {
-//                                self.height = filtered
-//                            }
-//                        }
+                    
                     Text("Enter Your Weight")
                         .font(.title)
                         .fontWeight(.bold)
@@ -356,42 +381,29 @@ struct Home : View {
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 4).stroke(self.weight != "" ? Color("Color") : self.color, lineWidth: 2))
                         .padding(.top, 25)
-//                        .onReceive(Just(weight)) { newValue in
-//                            let filtered = newValue.filter { allowedChars.contains(Unicode.Scalar(String($0))!) }
-//                            if filtered != newValue {
-//                                self.weight = filtered
-//                            }
-//                        }
+                    
                     if let myBMI = userBMI {
-                        Text(String(format: "%.2f", myBMI))
+                        Text("")
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .padding(.top, 30)
                     } else {
-                        Text("Fill Fields Above")
+                        Text("")
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .padding(.top, 30)
                     }
                 }
+                .padding(.top, 125)
                 .padding(.horizontal, 25)
-                
             }
-            
-            
-            
-//            NavigationLink(destination: Test(bmi: userBMI ?? 3.14)) {
-                
+            NavigationLink(destination: DetailView(), isActive: self.$linkIsActive) {
                 Button(action: {
-                    // Calculate BMI
-                    print("Change screen")
-//                    print("User BMI Before: \(String(describing: userBMI))")
-                    let weightDouble = Double(self.$weight.wrappedValue) ?? 0.0
-                    let heightDouble = (Double(self.$height.wrappedValue) ?? 0.0) / 100.0
-                    userBMI = weightDouble / (heightDouble * heightDouble)
-                    print("User BMI After: \(String(describing: userBMI))")
+                    if !self.height.isEmpty && !self.weight.isEmpty {
+                        self.linkIsActive = true
+                    }
                 }){
-                    Text("Get BMI")
+                    Text("Continue")
                         .foregroundColor(.white)
                         .padding(.vertical)
                         .frame(width: UIScreen.main.bounds.width - 50)
@@ -399,13 +411,39 @@ struct Home : View {
                 .background(Color("Color"))
                 .cornerRadius(10)
                 .padding(.top, 25)
-//            }
+            }
+        }
+    }
+
+        
+        private func calculateBMI(height: Double, weight: Double) -> Double {
+            let heightM = height / 100.0
+            return weight / (heightM * heightM)
+        }
+    }
 
             
-        }
+//
+            //Button(action: {
+                    // Calculate BMI
+                    //print("Change screen")
+//                    print("User BMI Before: \(String(describing: userBMI))")
+                    //let weightDouble = Double(self.$weight.wrappedValue) ?? 0.0
+                    //let heightDouble = (Double(self.$height.wrappedValue) ?? 0.0) / 100.0
+                    //userBMI = weightDouble / (heightDouble * heightDouble)
+                    //print("User BMI After: \(String(describing: userBMI))")
+                //}){
+                    //Text("Get BMI")
+                      //  .foregroundColor(.white)
+                        //.padding(.vertical)
+                        //.frame(width: UIScreen.main.bounds.width - 50)
+                //}
+                //.background(Color("Color"))
+                //.cornerRadius(10)
+                //.padding(.top, 25)
+
+            
         
-    }
-}
 
 //struct weight : View {
 //
@@ -817,6 +855,7 @@ struct DetailView : View {
         }
     }
 }
+
 
 struct Workout: Identifiable {
     //variable UUID is being set to the unique identifier gotten from UUID
