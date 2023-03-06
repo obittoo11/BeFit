@@ -9,13 +9,11 @@ import SwiftUI
 
 struct ViewB: View {
     var body: some View {
-        ZStack{
-            Color.blue
-            
-            Image(systemName: "figure.run")
-                .foregroundColor(Color.white)
-                .font(.system(size: 100))
-        }
+        Color.blue
+        
+        Image(systemName: "figure.run")
+            .foregroundColor(Color.white)
+            .font(.system(size: 100))
     }
 }
 

@@ -9,37 +9,6 @@ import SwiftUI
 import Firebase
 import Combine
 
-/*TabView {
-            NavigationView {
-                VStack {
-                    Text("Home View")
-                    NavigationLink(destination: DetailView()) {
-                        Text("Navigate to Detail View 1")
-                    }
-                }
-                .navigationBarTitle("Home")
-            }
-            .tabItem {
-                Image(systemName: "house.fill")
-                Text("Home")
-            }
-
-            NavigationView {
-                VStack {
-                    Text("Settings View")
-                    NavigationLink(destination: ViewB()) {
-                        Text("Navigate to Detail View 2")
-                    }
-                }
-                .navigationBarTitle("Settings")
-            }
-            .tabItem {
-                Image(systemName: "gear")
-                Text("Settings")
-            }
-        }*/
-
-
 
 struct ContentView: View {
     
@@ -51,7 +20,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Home()
+            DetailView()
                 .onAppear {
                     DataManager.shared.createAccount(email: email, password: password, bmi: globalBMI) { result in
                         switch result {
@@ -848,9 +817,9 @@ struct DetailView : View {
                         }
                     
                 }
-                
-                
             }
+            
+            
             
         }
     }
@@ -878,6 +847,102 @@ let workoutsData = [
     Workout(day: "Saturday", bodyPart: "Legs", image: "squats", routine: ["Warmup", "Squats", "Cooldown"])
     
 ]
+
+struct ImagePicker : UIViewControllerRepresentable{
+    @Environment(\.presentationMode) private var presentationMode
+        var sourceType: UIImagePickerController.SourceType = .photoLibrary
+        @Binding var selectedImage: UIImage
+
+        func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
+
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = sourceType
+            imagePicker.delegate = context.coordinator
+
+            return imagePicker
+        }
+
+        func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
+
+        }
+
+        func makeCoordinator() -> Coordinator {
+            Coordinator(self)
+        }
+
+        final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+            var parent: ImagePicker
+
+            init(_ parent: ImagePicker) {
+                self.parent = parent
+            }
+
+            func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+                if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                    parent.selectedImage = image
+                }
+
+                parent.presentationMode.wrappedValue.dismiss()
+            }
+
+        }
+}
+
+struct profile : View {
+    @State private var image = UIImage()
+    @State private var showSheet = false
+    @State private var firstName = ""
+    @State private var lastName = ""
+    @State private var birthDate = Date()
+
+    var body: some View {
+            
+        VStack{
+        VStack {
+                    Image(uiImage: self.image)
+                  .resizable()
+                  .cornerRadius(50)
+                  .frame(width: 250, height: 250)
+                  .background(Color.black.opacity(0.2))
+                  .aspectRatio(contentMode: .fill)
+                  .clipShape(Circle())
+                  .padding(.top, 70)
+
+         Text("Change Photo")
+             .font(.title3)
+             .fontWeight(.bold)
+             .frame(maxWidth: .infinity)
+             .frame(height: 75)
+             .background(Color("Color"))
+             .cornerRadius(16)
+             .foregroundColor(.white)
+                 .padding(.horizontal, 20)
+                 .onTapGesture {
+                   showSheet = true
+                 }
+                 .padding(.top, 50)
+            }
+        .padding(.top, 25)
+        .padding(.bottom, 30)
+        .padding(.horizontal, 20)
+        .sheet(isPresented: $showSheet) {
+            
+            ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
+        }
+            
+                Form{
+                    TextField("First Name", text: $firstName)
+                    TextField("Last Name", text: $lastName)
+                    DatePicker("Birth Date", selection: $birthDate, displayedComponents: .date)
+                }
+            }
+                
+
+        }
+    }
 
 struct Test: View {
     var bmi: Double
