@@ -31,6 +31,7 @@ struct YourApp: App {
       NavigationView {
           ContentView(email: .constant(""), password: .constant(""))
             .environmentObject(dataManager)
+          
       }
     }
   }
