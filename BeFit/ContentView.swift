@@ -451,7 +451,7 @@ func calculateBMI(height: Double, weight: Double) -> Double {
     let bmiRef = db.collection("listBMI").document(user.uid)
 
     
-    let data: [String: Any] = [
+    let data: [String: Double] = [
         "bmi": bmi
     ]
     

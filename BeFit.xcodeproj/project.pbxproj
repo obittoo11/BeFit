@@ -19,10 +19,12 @@
 		34BF9BD4296704DA0097CD46 /* BeFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BF9BD3296704DA0097CD46 /* BeFitUITestsLaunchTests.swift */; };
 		34BF9BE6296732500097CD46 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 34BF9BE5296732500097CD46 /* FirebaseAuth */; };
 		34BF9BE8296732500097CD46 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 34BF9BE7296732500097CD46 /* FirebaseFirestore */; };
-		34BF9BEC296743170097CD46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34BF9BEB296743170097CD46 /* GoogleService-Info.plist */; };
 		34D271A429B4814F008F4B62 /* ViewB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D271A329B4814F008F4B62 /* ViewB.swift */; };
 		34D271A629B4815F008F4B62 /* ViewC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D271A529B4815F008F4B62 /* ViewC.swift */; };
 		34D271A829B48B07008F4B62 /* var.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D271A729B48B07008F4B62 /* var.swift */; };
+		D9DBCE6929B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9DBCE6829B7EE45007A1DB1 /* GoogleService-Info.plist */; };
+		D9DBCE6A29B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9DBCE6829B7EE45007A1DB1 /* GoogleService-Info.plist */; };
+		D9DBCE6B29B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9DBCE6829B7EE45007A1DB1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +57,10 @@
 		34BF9BCD296704DA0097CD46 /* BeFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34BF9BD1296704DA0097CD46 /* BeFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeFitUITests.swift; sourceTree = "<group>"; };
 		34BF9BD3296704DA0097CD46 /* BeFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		34BF9BEB296743170097CD46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		34D271A329B4814F008F4B62 /* ViewB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewB.swift; sourceTree = "<group>"; };
 		34D271A529B4815F008F4B62 /* ViewC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewC.swift; sourceTree = "<group>"; };
 		34D271A729B48B07008F4B62 /* var.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = var.swift; sourceTree = "<group>"; };
+		D9DBCE6829B7EE45007A1DB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +123,7 @@
 		34BF9BB4296704D90097CD46 /* BeFit */ = {
 			isa = PBXGroup;
 			children = (
-				34BF9BEB296743170097CD46 /* GoogleService-Info.plist */,
+				D9DBCE6829B7EE45007A1DB1 /* GoogleService-Info.plist */,
 				34BF9BB5296704D90097CD46 /* BeFitApp.swift */,
 				34BF9BB7296704D90097CD46 /* ContentView.swift */,
 				34BF9BB9296704DA0097CD46 /* Assets.xcassets */,
@@ -266,7 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34BF9BBA296704DA0097CD46 /* Assets.xcassets in Resources */,
-				34BF9BEC296743170097CD46 /* GoogleService-Info.plist in Resources */,
+				D9DBCE6929B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9DBCE6A29B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9DBCE6B29B7EE45007A1DB1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,7 +475,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SahibAnand.BeFit;
+				PRODUCT_BUNDLE_IDENTIFIER = shauryagupta.BeFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -509,7 +513,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SahibAnand.BeFit;
+				PRODUCT_BUNDLE_IDENTIFIER = shauryagupta.BeFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
