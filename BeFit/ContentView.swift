@@ -10,50 +10,61 @@ import Firebase
 import Combine
 
 
-struct ContentView: View {
+struct TabBar : View {
     
     @Binding var email : String
     @Binding var password : String
     
     let dataManager = DataManager()
     
+    var body: some View {
+        TabView {
+            DetailView(firstName: .constant("Name"))
+                .onAppear {
+                    DataManager.shared.createAccount(email: email, password: password, bmi: globalBMI) { result in
+                        switch result {
+                        case .success:
+                            // handle success
+                            break
+                        case .failure(let error):
+                            // handle error
+                            print(error.localizedDescription)
+                            break
+                        }
+                    }
+                }
+                .tabItem(){
+                    Image(systemName: "figure.run")
+                    Text("Workout")
+                }
+            DietView()
+                .tabItem(){
+                    Image(systemName: "fork.knife")
+                    Text("Diet")
+                }
+            profile()
+                .tabItem(){
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                    
+                    
+                }
+            
+        }
+    }
+}
+
+struct ContentView: View {
+    
+    @Binding var email : String
+    @Binding var password : String
+    let dataManager = DataManager()
+    
     
     var body: some View {
         VStack {
             
-            TabView {
-                DetailView()
-                    .onAppear {
-                        DataManager.shared.createAccount(email: email, password: password, bmi: globalBMI) { result in
-                            switch result {
-                            case .success:
-                                // handle success
-                                break
-                            case .failure(let error):
-                                // handle error
-                                print(error.localizedDescription)
-                                break
-                            }
-                        }
-                    }
-                    .tabItem(){
-                        Image(systemName: "figure.run")
-                        Text("Workout")
-                    }
-                ViewB()
-                    .tabItem(){
-                        Image(systemName: "fork.knife")
-                        Text("Diet")
-                    }
-                ViewC()
-                    .tabItem(){
-                        Image(systemName: "person.crop.circle")
-                        Text("Profile")
-                        
-                        
-                    }
-                
-            }
+            Home()
             
 //            DetailView()
 //                .onAppear {
@@ -401,11 +412,17 @@ struct Home : View {
                 .padding(.top, 125)
                 .padding(.horizontal, 25)
             }
-            NavigationLink(destination: DetailView(), isActive: self.$linkIsActive) {
+            NavigationLink(destination: TabBar(email: .constant("example@gmail.com"), password: .constant("password123")), isActive: self.$linkIsActive) {
                 Button(action: {
                     if !self.height.isEmpty && !self.weight.isEmpty {
                         self.linkIsActive = true
+                        let heightDouble = Double(self.height) ?? 0
+                        let weightDouble = Double(self.weight) ?? 0
+                        let bmi = calculateBMI(height: heightDouble, weight: weightDouble)
+                        self.userBMI = bmi
                     }
+                    
+                    
                 }){
                     Text("Continue")
                         .foregroundColor(.white)
@@ -419,11 +436,34 @@ struct Home : View {
         }
     }
     
+}
+
+func calculateBMI(height: Double, weight: Double) -> Double {
+    let heightMeters = height / 100
+    let bmi = weight / (heightMeters * heightMeters)
     
-    private func calculateBMI(height: Double, weight: Double) -> Double {
-        let heightM = height / 100.0
-        return weight / (heightM * heightM)
+    guard let user = Auth.auth().currentUser else {
+        print("Error: no authenticated user found")
+        return bmi
     }
+    
+    let db = Firestore.firestore()
+    let bmiRef = db.collection("listBMI").document(user.uid)
+
+    
+    let data: [String: Any] = [
+        "bmi": bmi
+    ]
+    
+    bmiRef.setData(data) { error in
+        if let error = error {
+            print("Error saving BMI data: \(error.localizedDescription)")
+        } else {
+            print("BMI data saved successfully")
+        }
+    }
+    
+    return bmi
 }
 
 
@@ -742,6 +782,9 @@ struct ErrorView: View {
 }
 
 struct DetailView : View {
+    
+    @Binding var firstName : String
+    
     var body : some View {
         NavigationView {
             VStack(alignment: .leading){
@@ -753,13 +796,19 @@ struct DetailView : View {
                     
                     VStack {
                         
+                        
                         Spacer()
                         
-                        Text("Full Body Workout")
+                        Text("Hello \(globalName)!")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                        Text("For Beginners")
+                        
+                        Text("Welcome to BeFit!")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Text("Become the Best Version of Yourself!")
                             .fontWeight(.regular)
                             .foregroundColor(.white)
                             .padding(20)
@@ -776,7 +825,7 @@ struct DetailView : View {
                 //.padding(.top, 20)
                 .padding()
                 
-                Text("Weekly Plan")
+                Text("Weekly Workout")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()
@@ -851,6 +900,138 @@ struct Workout: Identifiable {
     
 }
 
+struct DietView : View {
+    @State var progressValue: Float = 0.0
+
+    var body : some View {
+        NavigationView {
+            VStack(alignment: .leading){
+                
+                Text("Weekly Diet")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                
+                ScrollView(.horizontal, showsIndicators: false){
+                    VStack{
+                        HStack(spacing: 30){
+                            
+                            ForEach(dietData) { diet in
+                                
+                                NavigationLink(destination: ListView()){
+                                    ZStack{
+                                        Image(diet.image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(height: 220)
+                                        
+                                        VStack {
+                                            
+                                            Spacer()
+                                            
+                                            Text(diet.day)
+                                                .font(.title2)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.white)
+                                            Text(diet.bodyPart)
+                                                .fontWeight(.regular)
+                                                .foregroundColor(.white)
+                                            
+                                        }
+                                        
+                                        .padding()
+                                        .frame(width: 150)
+                                        
+                                    }
+                                }
+                                
+                                .frame(width: 150, height: 220)
+                                .clipped()
+                                .cornerRadius(20)
+                                .shadow(radius: 8)
+                                
+                            }
+                        }
+                        .padding()
+                    }
+                    
+                }
+                
+                VStack{
+                        
+                        VStack{
+                            Text("Daily Goal")
+                                .font(.title)
+                                .bold()
+                            Text("5 Glasses of Water")
+                                .font(.caption)
+                                .bold()
+                        }
+                        
+                            VStack{
+                                ProgressBar(progress: self.$progressValue)
+                                    .frame(width: 150.0, height: 150.0)
+                                    .padding(20.0)
+                                
+                                Button(action: {
+                                    self.incrementProgress()
+                                }) {
+                                    HStack{
+                                        Image(systemName: "plus.rectangle.fill")
+                                        Text("Drink More Water")
+                                    }
+                                    .padding(15.0)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 15.0)
+                                            .stroke(lineWidth: 2.0)
+                                    )
+                                }
+                                
+                            }
+                }
+                .padding(.leading, 90)
+                
+                
+                Spacer()
+            }
+            
+            
+            
+        }
+        
+        }
+    func incrementProgress(){
+        let randomValue = Float([0.2].randomElement()!)
+        self.progressValue += randomValue
+    }
+}
+
+struct ProgressBar : View {
+    @Binding var progress: Float
+    
+    var body: some View {
+        ZStack{
+                Circle()
+                    .stroke(lineWidth: 20.0)
+                    .opacity(0.3)
+                    .foregroundColor(Color("Color"))
+            
+            Circle()
+                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
+                .foregroundColor(Color("Color"))
+                .rotationEffect(Angle(degrees: 270.0))
+                .animation(.linear)
+            
+            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
+                .font(.largeTitle)
+                .bold()
+        }
+    }
+}
+
 
 let workoutsData = [
     Workout(day: "Monday", bodyPart: "Chest", image: "chest", routine: ["Warmup", "Push-Ups", "Cooldown"]),
@@ -859,6 +1040,26 @@ let workoutsData = [
     Workout(day: "Thursday", bodyPart: "Triceps", image: "tricep", routine: ["Warmup", "Tricep Pushdowns", "Cooldown"]),
     Workout(day: "Friday", bodyPart: "Shoulders", image: "shoulder", routine: ["Warmup", "Shoulder Press", "Cooldown"]),
     Workout(day: "Saturday", bodyPart: "Legs", image: "squats", routine: ["Warmup", "Squats", "Cooldown"])
+    
+]
+
+struct Diet: Identifiable {
+    //variable UUID is being set to the unique identifier gotten from UUID
+    var id = UUID()
+    var day : String
+    var bodyPart : String
+    var image: String
+    var routine: [String]
+    
+    
+}
+
+let dietData = [
+    Diet(day: "Meal 1", bodyPart: "Breakfast", image: "breakfast", routine: ["Warmup", "Push-Ups", "Cooldown"]),
+    Diet(day: "Meal 2", bodyPart: "Snack", image: "snack1", routine: ["Warmup", "Pull-Ups", "Cooldown"]),
+    Diet(day: "Meal 3", bodyPart: "Lunch", image: "lunch", routine: ["Warmup", "Bicep Curls", "Cooldown"]),
+    Diet(day: "Meal 4", bodyPart: "Snack", image: "snack2", routine: ["Warmup", "Tricep Pushdowns", "Cooldown"]),
+    Diet(day: "Meal 5", bodyPart: "Dinner", image: "dinner", routine: ["Warmup", "Shoulder Press", "Cooldown"]),
     
 ]
 
@@ -905,6 +1106,12 @@ struct ImagePicker : UIViewControllerRepresentable{
     }
 }
 
+struct UserInfo {
+    var firstName: String
+    var lastName: String
+    // Add other properties as needed
+}
+
 struct profile : View {
     @State private var image = UIImage()
     @State private var showSheet = false
@@ -919,17 +1126,17 @@ struct profile : View {
                 Image(uiImage: self.image)
                     .resizable()
                     .cornerRadius(50)
-                    .frame(width: 250, height: 250)
+                    .frame(width: 200, height: 200)
                     .background(Color.black.opacity(0.2))
                     .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
-                    .padding(.top, 70)
+                    .padding(.top, 50)
                 
                 Text("Change Photo")
                     .font(.title3)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 75)
+                    .frame(height: 65)
                     .background(Color("Color"))
                     .cornerRadius(16)
                     .foregroundColor(.white)
@@ -947,16 +1154,52 @@ struct profile : View {
                 ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
             }
             
-            Form{
-                TextField("First Name", text: $firstName)
-                TextField("Last Name", text: $lastName)
-                DatePicker("Birth Date", selection: $birthDate, displayedComponents: .date)
+                Form{
+                    TextField("First Name", text: $firstName, onEditingChanged: { isEditing in
+                        if !isEditing {
+                            globalName = firstName
+                        }
+                    })
+                    TextField("Last Name", text: $lastName)
+                    DatePicker("Birth Date", selection: $birthDate, displayedComponents: .date)
+                    Button("Save") {
+                        let userInfo = UserInfo(firstName: firstName, lastName: lastName)
+                        saveUserInfo(userInfo)
+                    }
+                    
             }
         }
         
         
     }
 }
+
+func saveUserInfo(_ userInfo: UserInfo) {
+    guard let user = Auth.auth().currentUser else {
+        print("Error: no authenticated user found")
+        return
+    }
+    
+    let db = Firestore.firestore()
+    let userRef = db.collection("userinfo").document(user.uid)
+    
+    let data: [String: Any] = [
+        "firstName": userInfo.firstName,
+        "lastName": userInfo.lastName,
+        // add other properties here
+    ]
+    
+    userRef.setData(data) { error in
+        if let error = error {
+            print("Error saving user info: \(error.localizedDescription)")
+        } else {
+            print("User info saved successfully")
+        }
+    }
+}
+
+
+
 
 struct Test: View {
     var bmi: Double

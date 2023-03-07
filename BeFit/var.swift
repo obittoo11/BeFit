@@ -9,3 +9,4 @@ import Foundation
 
 var globalBMI: Double = 0.0
 var globalHeight: Double = 0.0
+var globalName: String = ""

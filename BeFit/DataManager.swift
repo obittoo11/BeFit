@@ -25,6 +25,8 @@ struct BMI {
     
 class DataManager: ObservableObject {
     
+    @Published var list = [User]()
+
     static let shared = DataManager()
     
     let db = Firestore.firestore()
